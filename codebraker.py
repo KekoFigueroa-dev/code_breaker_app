@@ -133,3 +133,42 @@ for letter in key_phrase_2_ordered_letters:
     print(letter, end=', ')
 
 
+#Encode/Decode a given message using key_phrase_1 and key_phrase_2
+choice = input("\n\nWould you like to encode or decode a message: ").lower()
+phrase = input("What is the phrase: ").lower()
+
+#Removing all non letters from the users phrase
+for non_letter_char in non_letter_chars:
+    phrase = phrase.replace(non_letter_char, '')    
+
+#User wants to encode a message
+if choice == "encode":
+    encoded_phrase = []
+    for letter in phrase:
+        index = key_phrase_1_ordered_letters.index(letter)
+        letter = key_phrase_2_ordered_letters[index]
+        encoded_phrase.append(letter)
+
+    print("\nThe Encoded message is:")
+    for letter in encoded_phrase:
+        print(letter, end='')   
+
+#User wants to decode a message
+elif choice == "decode":
+    decoded_phrase = []
+    for letter in phrase:
+        index = key_phrase_2_ordered_letters.index(letter)
+        letter = key_phrase_1_ordered_letters[index]
+        decoded_phrase.append(letter)
+
+    print("\nThe Decoded message is:")
+    for letter in decoded_phrase:
+        print(letter, end='')
+
+#Invalid option
+else:
+    print("Please enter either 'encode' or 'decode' as your choice. Try again.")
+
+
+print("")
+print("\n\nThank you for using the Code Breaker App!")
