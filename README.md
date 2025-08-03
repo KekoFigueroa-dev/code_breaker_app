@@ -1,7 +1,7 @@
 # Code Breaker App
 
 A Python app that encodes and decodes secret messages using frequency analysis from two key texts.  
-The "keys" are actual paragraphs from *A Game of Thrones* (ASOIAF Book 1), making your cipher as epic as Westeros itself.
+The "keys" are actual paragraphs from *A Game of Thrones* (ASOIAF Book 1).
 
 ## How it works
 
@@ -12,7 +12,7 @@ The "keys" are actual paragraphs from *A Game of Thrones* (ASOIAF Book 1), makin
 
 ## Why a sword?
 
-Crack the code, and you’re rewarded with a sword—just like a true lord or lady of the North!
+Since I used phrases from ASOIAF to build the encoder You are rewarded with a sword—just like a true lord or lady of Westeros!
 
 ## Usage
 
@@ -23,7 +23,6 @@ Crack the code, and you’re rewarded with a sword—just like a true lord or la
 ## Credits
 
 Key phrases are excerpts from *A Game of Thrones* by George R. R. Martin.  
-This project is for educational/fan purposes only.
+This project is for educational purposes only.
 
 ---
-**May your secrets be as impenetrable as a Lannister's gold, and your discoveries as rewarding as a Targaryen's fire.**
