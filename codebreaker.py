@@ -105,35 +105,39 @@ print("\nLetters ordered by frequency:")
 print(", ".join(key_phrase_2_ordered_letters))
 
 # Prompt user for encode/decode choice and message
-choice = input("\n\nWould you like to encode or decode a message: ").lower()
-phrase = input("What is the phrase: ").lower()
-
-# Clean user message
-for non_letter_char in non_letter_chars:
-    phrase = phrase.replace(non_letter_char, '')
-
-# Encode message using frequency mapping
-if choice == "encode":
-    encoded_phrase = []
-    for letter in phrase:
-        index = key_phrase_1_ordered_letters.index(letter)
-        letter = key_phrase_2_ordered_letters[index]
-        encoded_phrase.append(letter)
-    print("\nThe Encoded message is:")
-    print("".join(encoded_phrase))
-
-# Decode message using frequency mapping
-elif choice == "decode":
-    decoded_phrase = []
-    for letter in phrase:
-        index = key_phrase_2_ordered_letters.index(letter)
-        letter = key_phrase_1_ordered_letters[index]
-        decoded_phrase.append(letter)
-    print("\nThe Decoded message is:")
-    print("".join(decoded_phrase))
-
-# Handle invalid option
-else:
-    print("Please enter either 'encode' or 'decode' as your choice. Try again.")
+while True:
+    choice = input("\n\nWould you like to encode or decode a message: ").lower()
+    if choice == "encode" or choice == "decode":
+        phrase = input("What is the phrase: ").lower()
+        for non_letter_char in non_letter_chars:
+            phrase = phrase.replace(non_letter_char, '')
+        if choice == "encode":
+            encoded_phrase = []
+            for letter in phrase:
+                index = key_phrase_1_ordered_letters.index(letter)
+                letter = key_phrase_2_ordered_letters[index]
+                encoded_phrase.append(letter)
+            print("\nThe Encoded message is:")
+            print("".join(encoded_phrase))
+        else:  # decode
+            decoded_phrase = []
+            for letter in phrase:
+                index = key_phrase_2_ordered_letters.index(letter)
+                letter = key_phrase_1_ordered_letters[index]
+                decoded_phrase.append(letter)
+            print("\nThe Decoded message is:")
+            print("".join(decoded_phrase))
+        break  # Exit loop after successful encode/decode
+    else:
+        print("Please enter either 'encode' or 'decode' as your choice. Try again.")
 
 print("\n\nThank you for using the Code Breaker App!")
+
+print(r"""
+       />_________________________________
+[########[]_________________________________>
+       \>
+      _/||\_
+     |______|
+  The Code Breaker Sword is yours!
+""")
