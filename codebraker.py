@@ -1,174 +1,139 @@
-from collections import Counter
-#code breaker app
+"""
+Code Breaker App
 
-# Welcome message
+Encodes or decodes messages using frequency analysis from two predetermined key texts.
+Maps each letter in the input message to a letter in the second key phrase based on frequency order.
+"""
+
+from collections import Counter
+
+# Print welcome message
 print("Welcome to my Code Breaker App!")
 
-#List elements to remove non-letter characters
+# Define non-letter characters to remove from input
 non_letter_chars = " 0123456789.,;:!?'\"()[]{}<>-_=+`~@#$%^&*|\\/\n\t"
-# Hardcoded key phrases
+
+# Hardcoded key phrases for frequency analysis
 key_phrase_1 = """
-To Sherlock Holmes she is always the woman. I have seldom heard him mention her
-under any other name.
-In his eyes she eclipses and predominates the whole of her sex. It was not that
-he felt any emotion akin to love for Irene Adler.
-All emotions, and that one particularly, were abhorrent to his cold, precise but
-admirably balanced mind.
-He was, I take it, the most perfect reasoning and observing machine that the
-world has seen, but as a lover he would have placed himself in a false position.
-He never spoke of the softer passions, save with a gibe and a sneer.
-They were admirable things for the observer excellent for drawing the veil from
-men's motives and actions.
-But for the trained reasoner to admit such intrusions into his own delicate and
-finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results.
-Grit in a sensitive instrument, or a crack in one of his own high power lenses, would not be more disturbing than a strong emotion in a nature such as his.
-And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.
-I had seen little of Holmes lately. My marriage had drifted us away from each
-other. My own complete happiness, and the home centred interests which rise up around the man who first finds himself master of his own establishment,
-were sufficient to absorb all my attention, while Holmes, who loathed every form
-of society with his whole Bohemian soul,
-remained in our lodgings in Baker Street, buried among his old books, and
-alternating from week to week between cocaine and ambition,
-the drowsiness of the drug, and the fierce energy of his own keen nature.
-He was still, as ever, deeply attracted by the study of crime, and occupied his immense faculties and extraordinary powers of observation in
-following out those clues, and clearing up those mysteries which had been abandoned as hopeless by the
-official police.
-From time to time I heard some vague account of his doings: of his summons to
-Odessa in the case off murder, of his clearing up of the singular tragedy of the Atkinson brothers at
-Trincomalee, and finally of the mission which he had accomplished so delicately and
-successfully for the reigning family of Holland. Beyond these signs of his activity, however, which I merely shared with all the
-readers of the daily press, I knew little of my former friend and companion. """
+MY LORDS!” he shouted, his voice booming off the rafters. “Here is what I say to these
+two kings!” He spat. “ Renly Baratheon is nothing to me, nor Stannis neither. Why
+should they rule over me and mine, from some flowery seat in Highgarden or Dorne?
+What do they know of the Wall or the wolfswood or the barrows of the First Men? Even
+their gods are wrong. The Others take the Lannisters too, I’ve had a bellyful of them.” He
+reached back over his shoulder and drew his immense two-handed greatsword. “Why
+shouldn’t we rule ourselves again? It was the dragons we married, and the dragons are
+all dead!” He pointed at Robb with the blade. “There sits the only king I mean to bow my
+knee to, m’lords,” he thundered. “The King in the North!”
+And he knelt, and laid his sword at her son’s feet.
+“I’ll have peace on those terms,” Lord Karstark said. “They can keep their red castle and
+their iron chair as well.” He eased his longsword from its scabbard. “The King in the
+North!” he said, kneeling beside the Greatjon.
+Maege Mormont stood. “The King of Winter!” she declared, and laid her spiked mace
+beside the swords. And the river lords were rising too, Blackwood and Bracken and
+Mallister, houses who had never been ruled from Winterfell, yet Catelyn watched them
+rise and draw their blades, bending their knees and shouting the old words that had not
+been heard in the realm for more than three hundred years, since Aegon the Dragon had
+come to make the Seven Kingdoms one . . . yet now were heard again, ringing from the
+timbers of her father’s hall:
+“The King in the North!”
+“The King in the North!”
+“THE KING IN THE NORTH!”
+"""
 
+# Normalize and clean key_phrase_1
 key_phrase_1 = key_phrase_1.lower()
-
-#Removing all non-letter characters
 for non_letter_char in non_letter_chars:
     key_phrase_1 = key_phrase_1.replace(non_letter_char, '')
 
+# Frequency analysis for key_phrase_1
 total_occurrences = len(key_phrase_1)
-
-#Create a Counter for each occurrence of each letter
 letter_counter = Counter(key_phrase_1)
 
-#Determine the frequency of each letter
+# Print frequency table for key_phrase_1
 print(f"\nFrequency analysis for: 'key_phrase_1'")
 print("\nLetter\tOccurrence\tPercentage")
 for key, value in sorted(letter_counter.items()):
-    percentage = 100*value/total_occurrences
+    percentage = 100 * value / total_occurrences
     percentage = round(percentage, 2)
     print(f"{key}\t{value}\t\t{percentage}%")
 
-
-#Make a list of letters from highest occurrence to lowest
+# Build ordered letter list by frequency for key_phrase_1
 ordered_letter_count = letter_counter.most_common()
-key_phrase_1_ordered_letters = []
-for pair in ordered_letter_count:
-    key_phrase_1_ordered_letters.append(pair[0])
+key_phrase_1_ordered_letters = [pair[0] for pair in ordered_letter_count]
 
-#print the list 
+# Print ordered letters for key_phrase_1
 print("\nLetters ordered by frequency:")
-for letter in key_phrase_1_ordered_letters:
-    print(letter, end=', ')
+print(", ".join(key_phrase_1_ordered_letters))
 
-#Hard code a pre-determined key_phrase_2 for communication purposes.
+# Hardcoded second key phrase for cipher mapping
 key_phrase_2 = """
-Quite so! You have not observed. And yet you have seen.
-That is just my point. Now, I know that there are seventeen steps, because I
-have both seen and observed.
-By the way, since you are interested in these little problems,
-and since you are good enough to chronicle one or two of my trifling
-experiences, you may be interested in this.
-He threw over a sheet of thick, pink tinted notepaper which had been lying open
-upon the table.
-It came by the last post, said he. Read it aloud.
-The note was undated, and without either signature or address.
-There will call upon you tonight, at a quarter to eight o'clock,
-it said, "a gentleman who desires to consult you upon a matter of the very
-deepest moment.
-Your recent services to one of the royal houses of Europe have shown that you
-are one who may safely be trusted
-with matters which are of an importance which can hardly be exaggerated.
-This account of you we have from all quarters received.
-Be in your chamber then at that hour, and do not take it amiss if your visitor
-wear a mask.
-This is indeed a mystery, I remarked. What do you imagine that it means?
-I have no data yet. It is a capital mistake to theorise before one has data.
-Insensibly one begins to twist facts to suit theories, instead of theories to
-suit facts.
-But the note itself. What do you deduce from it?
-I carefully examined the writing, and the paper upon which it was written.
-The man who wrote it was presumably well to do, I remarked, endeavouring to
-imitate my companion's processes.
-Such paper could not be bought under half a crown a packet.
-It is peculiarly strong and stiff.
+“And what of my wrath, Lord Stark?” she asked softly. Her eyes
+searched his face. “You should have taken the realm for yourself. It was there for the
+taking. Jaime told me how you found him on the Iron Throne the day King’s Landing
+fell, and made him yield it up. That was your moment. All you needed to do was climb
+those steps, and sit. Such a sad mistake.”
+“I have made more mistakes than you can possibly imagine,” Ned said, “but that was not
+one of them.”
+“Oh, but it was, my lord,” Cersei insisted. “When you play the game of thrones, you win
+or you die. There is no middle ground.”
+.
 """
-key_phrase_2 = key_phrase_2.lower()
 
-#Removing all non-letter characters from key_phrase_2
+# Normalize and clean key_phrase_2
+key_phrase_2 = key_phrase_2.lower()
 for non_letter_char in non_letter_chars:
     key_phrase_2 = key_phrase_2.replace(non_letter_char, '')
 
+# Frequency analysis for key_phrase_2
 total_occurrences_2 = len(key_phrase_2)
+letter_counter_2 = Counter(key_phrase_2)
 
-#Create a Counter for each occurrence of each letter in key_phrase_2
-letter_counter_2 = Counter(key_phrase_2)    
-
-#Determine the frequency of each letter in key_phrase_2
+# Print frequency table for key_phrase_2
 print(f"\nFrequency analysis for: 'key_phrase_2'")
 print("\nLetter\tOccurrence\tPercentage")
 for key, value in sorted(letter_counter_2.items()):
-    percentage = 100*value/total_occurrences_2
+    percentage = 100 * value / total_occurrences_2
     percentage = round(percentage, 2)
     print(f"{key}\t{value}\t\t{percentage}%")
 
-#Make a list of letters from highest occurrence to lowest in key_phrase_2
+# Build ordered letter list by frequency for key_phrase_2
 ordered_letter_count_2 = letter_counter_2.most_common()
-key_phrase_2_ordered_letters = []
-for pair in ordered_letter_count_2:
-    key_phrase_2_ordered_letters.append(pair[0])    
+key_phrase_2_ordered_letters = [pair[0] for pair in ordered_letter_count_2]
 
-#print the list
+# Print ordered letters for key_phrase_2
 print("\nLetters ordered by frequency:")
-for letter in key_phrase_2_ordered_letters:
-    print(letter, end=', ')
+print(", ".join(key_phrase_2_ordered_letters))
 
-
-#Encode/Decode a given message using key_phrase_1 and key_phrase_2
+# Prompt user for encode/decode choice and message
 choice = input("\n\nWould you like to encode or decode a message: ").lower()
 phrase = input("What is the phrase: ").lower()
 
-#Removing all non letters from the users phrase
+# Clean user message
 for non_letter_char in non_letter_chars:
-    phrase = phrase.replace(non_letter_char, '')    
+    phrase = phrase.replace(non_letter_char, '')
 
-#User wants to encode a message
+# Encode message using frequency mapping
 if choice == "encode":
     encoded_phrase = []
     for letter in phrase:
         index = key_phrase_1_ordered_letters.index(letter)
         letter = key_phrase_2_ordered_letters[index]
         encoded_phrase.append(letter)
-
     print("\nThe Encoded message is:")
-    for letter in encoded_phrase:
-        print(letter, end='')   
+    print("".join(encoded_phrase))
 
-#User wants to decode a message
+# Decode message using frequency mapping
 elif choice == "decode":
     decoded_phrase = []
     for letter in phrase:
         index = key_phrase_2_ordered_letters.index(letter)
         letter = key_phrase_1_ordered_letters[index]
         decoded_phrase.append(letter)
-
     print("\nThe Decoded message is:")
-    for letter in decoded_phrase:
-        print(letter, end='')
+    print("".join(decoded_phrase))
 
-#Invalid option
+# Handle invalid option
 else:
     print("Please enter either 'encode' or 'decode' as your choice. Try again.")
 
-
-print("")
 print("\n\nThank you for using the Code Breaker App!")
